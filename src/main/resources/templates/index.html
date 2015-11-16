@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contacts List</title>
+</head>
+<body>
+
+<h1>{{#user}}{{username}}'s{{/user}} CRM</h1>
+
+<a href="showAddContact">Add Contact</a>
+<a href="logout">Logout</a>
+
+
+
+<br><br><br>
+
+{{#contact}}
+
+
+<a href="details?id={{id}}">{{#firstName}}{{.}}{{/firstName}}</a><br><br>
+
+{{/contact}}
+
+</body>
+</html>
+

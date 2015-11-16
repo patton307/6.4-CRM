@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+{{#contact}}
+
+{{#firstName}} {{.}} {{/firstName}}  {{#lastName}} {{.}} {{/lastName}}<br><br>
+
+{{address}}<br>
+{{#city}} {{.}} {{/city}}, {{#state}} {{.}} {{/state}}   {{#zip}} {{.}} {{/zip}}
+<br>
+{{#email}} {{.}} {{/email}}<br>
+
+{{#phone}} {{.}} {{/phone}} <br>
+<br>
+
+{{#company}} {{.}} {{/company}}, {{#jobTitle}} {{.}} {{/jobTitle}}<br><br>
+
+{{#notes}} {{.}} {{/notes}}
+
+
+
+<form action="delete-message" method="post">
+    <input type="hidden" value="{{id}}" name="id"/>
+    <button type="submit">Delete</button>
+</form>
+
+
+{{/contact}}
+
+</body>
+</html>
