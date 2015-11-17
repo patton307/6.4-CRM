@@ -1,9 +1,17 @@
-package com.theironyard;
+package com.theironyard.controllers;
 
+import com.theironyard.entities.Contact;
+import com.theironyard.entities.User;
+import com.theironyard.services.ContactRepository;
+import com.theironyard.services.UserRepository;
+import com.theironyard.util.PasswordHash;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
@@ -33,14 +41,29 @@ public class CRMController {
     }
 
     @RequestMapping("/")
-    public String home(Model model, HttpSession session) {
+    public String home(Model model, HttpSession session, @RequestParam(defaultValue = "0") int page, String lastName, String firstName) {
         String username = (String) session.getAttribute("username");
+        PageRequest pr = new PageRequest(page, 5);
+
+        Page p;
 
         if (username == null) {
             return "login";
         }
-        model.addAttribute("contact", contacts.findAllByOrderByFirstNameAsc());
         model.addAttribute("user", users.findOneByUsername(username));
+
+        model.addAttribute("showFirstName", contacts.findAllByOrderByFirstNameAsc(p, firstName));
+        model.addAttribute("showLastName", contacts.findAllByOrderByLastNameAsc(lastName));
+
+        p = contacts.findAllByOrderByFirstNameAsc(pr);
+        p2 = contacts.findAllByOrderByLastNameAsc(pr);
+        model.addAttribute("contact", p);
+\
+
+        // Next Page buttons
+        model.addAttribute("showNext", p.hasNext());
+        model.addAttribute("nextPage", page+1);
+
 
         return "index";
     }
